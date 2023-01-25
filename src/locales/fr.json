@@ -1,0 +1,43 @@
+{
+  "createAccountText": "Vous n'avez pas encore de compte ? {registerNowLabel}",
+  "haveAnAccount": "Vous avez déjà un compte ? {signInNow}",
+  "quizClosed": "Le questionnaire est fermé. Aucune autre réponse n'est autorisée.",
+  "next": "Suivant",
+  "finish": "Terminer",
+  "refresh": "Rafraichir",
+  "ranking": "Classement",
+  "name": "Nom",
+  "score": "Score",
+  "nominees": "Nominé·e·s",
+  "login": {
+    "title": "Se connecter",
+    "pleaseSignIn": "Veuillez vous connecter",
+    "emailLabel": "Courriel",
+    "emailPlaceholder": "nom@exemple.com",
+    "passwordLabel": "Mot de passe",
+    "registerNowLabel": "Inscrivez-vous maintenant."
+  },
+  "register": {
+    "title": "S'inscrire",
+    "firstNameLabel": "Prénom",
+    "lastNameLabel": "Nom",
+    "emailLabel": "Courriel",
+    "passwordLabel": "Mot de passe (min. 8 caractères)",
+    "signInNow": "Connectez-vous maintenant.",
+    "createAccountBtn": "Créer mon compte"
+  },
+  "logout": {
+    "title": "Se déconnecter"
+  },
+  "quizzes": {
+    "title": "Jeux"
+  },
+  "play": {
+    "action": "Jouer"
+  },
+  "messages": {
+    "required": "Ce champ est requis.",
+    "password_min": "Le mot de passe doit comporter au moins {min} caractères.",
+    "email":  "Courriel invalide."
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "createAccountText": "Don't have an account yet? {registerNowLabel}",
+  "haveAnAccount": "Already have an account? {signInNow}",
+  "quizClosed": "Quiz closed. No more answers permitted.",
+  "next": "Next",
+  "finish": "Finish",
+  "refresh": "Refresh",
+  "ranking": "Ranking",
+  "name": "Name",
+  "score": "Score",
+  "nominees": "Nominees",
+  "login": {
+    "title": "Log In",
+    "pleaseSignIn": "Please sign in",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "name@example.com",
+    "passwordLabel": "Password",
+    "registerNowLabel": "Register now."
+  },
+  "register": {
+    "title": "Register",
+    "firstNameLabel": "First name",
+    "lastNameLabel": "Last name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "name@example.com",
+    "passwordLabel": "Password (min. 8 characters)",
+    "signInNow": "Sign in now.",
+    "createAccountBtn": "Create Account"
+  },
+  "logout": {
+    "title": "Log Out"
+  },
+  "quizzes": {
+    "title": "Quizzes"
+  },
+  "play": {
+    "action": "Play"
+  },
+  "messages": {
+    "required": "This field is required.",
+    "password_min": "Password must be at least {min} characters.",
+    "email":  "Invalid email address."
+  }
+}
