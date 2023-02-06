@@ -1,3 +1,4 @@
+import router from '@/router';
 import axiosInstance from "@/services/api";
 import TokenService from "@/services/token";
 
@@ -23,6 +24,10 @@ const setup = (store) => {
       const originalConfig = err.config;
 
       if (originalConfig.url !== "/register/" && err.response) {
+        if (err.response.status === 401) {
+          store.dispatch('auth/signOut')
+          router.push('/login')
+        }
         // Access Token was expired
         if (err.response.status === 403 && !originalConfig._retry) {
           originalConfig._retry = true;

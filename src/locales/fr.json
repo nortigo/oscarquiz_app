@@ -9,6 +9,9 @@
   "name": "Nom",
   "score": "Score",
   "nominees": "Nominé·e·s",
+  "setWinnerLabel": "Définir gagnant",
+  "close": "Fermer",
+  "setOscarToLabel": "Remettre la récompense",
   "login": {
     "title": "Se connecter",
     "pleaseSignIn": "Veuillez vous connecter",
