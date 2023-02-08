@@ -61,14 +61,24 @@
             <div class="card-header">
               <h5 class="m-0">{{ item.label }}</h5>
             </div>
-            <div class="card-body">
+            <div v-if="item.nominees.length > 0" class="card-body">
               <ul class="list-group list-group-flush m-0">
                 <li v-for="nominee in item.nominees" :key="nominee.id" :class="[nominee.is_winner ? 'text-success-emphasis' : '', 'list-group-item']">
-                  <font-awesome-icon icon="trophy" v-show="nominee.is_winner" /> {{ nominee.name }}
+                  <font-awesome-icon icon="trophy" v-if="nominee.is_winner" /> {{ nominee.name }}
+                </li>
+                <li v-if="user.is_admin" class="list-group-item">
+                  <a @click.prevent="editNominees(index)" href="#">
+                    <font-awesome-icon icon="plus" class="me-2" /> {{ $t('addNomineesActionLabel') }}
+                  </a>
                 </li>
               </ul>
             </div>
-            <div v-if="user.is_admin" class="card-footer text-end">
+            <div v-if="user.is_admin && item.nominees.length === 0" class="card-body d-flex align-items-center justify-content-center">
+              <a @click.prevent="editNominees(index)" href="#">
+                <font-awesome-icon icon="plus" class="me-2" /> {{ $t('addNomineesActionLabel') }}
+              </a>
+            </div>
+            <div v-if="user.is_admin && item.nominees.length > 0" class="card-footer text-end">
               <a href="#" class="btn btn-success" @click.prevent="openWinnerModal(index)">
                 {{ $t('setWinnerLabel') }}
               </a>
@@ -78,12 +88,16 @@
       </div>
     </div>
 
-    <!-- MODAL -->
-    <div class="modal fade" id="winnerModal" ref="winnerModal" tabindex="-1" aria-labelledby="winnerModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
+    <!-- MODALS -->
+    <div v-if="user.is_admin" class="modal fade" id="winnerModal" ref="winnerModal" tabindex="-1" aria-labelledby="winnerModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
         <div v-if="selectedCategory" class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="winnerModalLabel">{{ selectedCategory.label }}</h1>
+            <i18n-t keypath="academyAwardForBest" tag="h1" class="modal-title fs-5" id="winnerModalLabel">
+              <template v-slot:category>
+                {{ selectedCategory.label }}
+              </template>
+            </i18n-t>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ $t('close') }}"></button>
           </div>
           <div class="modal-body">
@@ -112,6 +126,13 @@
         </div>
       </div>
     </div>
+
+    <nominee-form
+        :quiz="quiz"
+        :selected-category="selectedCategory"
+        @refresh="refresh()"
+        ref="nomineeForm"
+    />
   </div>
 </template>
 
@@ -119,9 +140,13 @@
 import api from '@/services/api';
 import { mapGetters } from 'vuex';
 import { Modal } from 'bootstrap';
+import NomineeForm from "@/components/NomineeForm.vue";
 
 export default {
   name: 'QuizView',
+  components: {
+    NomineeForm
+  },
   data () {
     return {
       quiz: null,
@@ -139,10 +164,10 @@ export default {
     canPlay() {
       for (let player of this.players) {
         if (player.user_id === this.user.id && player.can_play) {
-          return true;
+          return true
         }
       }
-      return false;
+      return false
     }
   },
   mounted() {
@@ -152,52 +177,62 @@ export default {
       this.fetchNominees()
     ]).then(() => {
       this.$nextTick(() => {
-        this.winnerModal = Modal.getOrCreateInstance(this.$refs.winnerModal);
+        if (this.user.is_admin) {
+          this.winnerModal = Modal.getOrCreateInstance(this.$refs.winnerModal)
+        }
       });
     });
   },
   methods: {
     refresh() {
-      this.fetchQuiz();
-      this.fetchPlayers();
-      this.fetchNominees();
+      this.fetchQuiz()
+      this.fetchPlayers()
+      this.fetchNominees()
     },
     fetchQuiz() {
       return api.get(`quiz/${this.$route.params.id}/`).then(response => {
-        this.quiz = response.data;
+        this.quiz = response.data
       });
     },
     fetchPlayers() {
       return api.get(`quiz/${this.$route.params.id}/players/`).then(response => {
-        this.players = response.data;
+        this.players = response.data
       });
     },
     fetchNominees() {
       return api.get(`quiz/${this.$route.params.id}/nominees/`).then(response => {
-        this.nominees = response.data;
+        this.nominees = response.data
       });
     },
     hasExpired() {
       const now = new Date();
-      const expire_datetime = new Date(this.quiz.expire_datetime);
-      return expire_datetime < now;
+      const expire_datetime = new Date(this.quiz.expire_datetime)
+      return expire_datetime < now
     },
     getRank(index) {
-      return index + 1;
+      return index + 1
     },
     openWinnerModal(index) {
-      this.selectedCategory = this.nominees[index];
-      this.winnerModal.show();
+      this.selectedCategory = {...this.nominees[index]}
+      this.winnerModal.show()
+    },
+    closeWinnerModal() {
+      this.selectedCategory = null
+      this.nomineeId = null
+      this.winnerModal.hide()
     },
     setWinner() {
       api.patch(`nominee/${this.nomineeId}/winner/?qid=${this.$route.params.id}`).then(() => {
-        this.winnerModal.hide();
+        this.closeWinnerModal()
+
         this.$nextTick(() => {
-          this.refresh();
+          this.refresh()
         })
-      }).finally(() => {
-        this.nomineeId = null;
       });
+    },
+    editNominees(index) {
+      this.selectedCategory = {...this.nominees[index]}
+      this.$refs.nomineeForm.openModal()
     }
   },
 }

@@ -9,14 +9,14 @@ import i18n from '@/i18n'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faLock, faPlay, faTrophy, faCheck, faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
+import { faLock, faPlay, faTrophy, faCheck, faArrowsRotate, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import setupInterceptors from "@/services/setupInterceptors";
 
 setupInterceptors(store);
 
-library.add(faLock, faPlay, faTrophy, faCheck, faArrowsRotate);
+library.add(faLock, faPlay, faTrophy, faCheck, faArrowsRotate, faPlus, faTrash);
 
 const app = createApp(App);
 app.use(store);

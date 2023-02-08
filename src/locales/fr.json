@@ -12,6 +12,11 @@
   "setWinnerLabel": "Définir gagnant",
   "close": "Fermer",
   "setOscarToLabel": "Remettre la récompense",
+  "addNomineesActionLabel": "Ajouter des nominé·e·s",
+  "addNomineesModalTitle": "Ajouter des nominé·e·s",
+  "academyAwardForBest": "Oscar du meilleur·e {category}",
+  "addNominee": "Ajouter un·e nominé·e",
+  "save": "Enregistrer",
   "login": {
     "title": "Se connecter",
     "pleaseSignIn": "Veuillez vous connecter",

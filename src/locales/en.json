@@ -12,6 +12,11 @@
   "setWinnerLabel": "Set winner",
   "close": "Close",
   "setOscarToLabel": "Give the award",
+  "addNomineesActionLabel": "Add nominees",
+  "addNomineesModalTitle": "Add nominees",
+  "academyAwardForBest": "Academy Award for Best {category}",
+  "addNominee": "Add nominee",
+  "save": "Save",
   "login": {
     "title": "Log In",
     "pleaseSignIn": "Please sign in",
@@ -43,5 +48,9 @@
     "required": "This field is required.",
     "password_min": "Password must be at least {min} characters.",
     "email":  "Invalid email address."
+  },
+  "nomineeRowForm":  {
+    "name": "Name",
+    "is_winner": "Is winner?"
   }
 }
