@@ -19,14 +19,14 @@
     <div class="row">
       <div v-if="category" class="col-12 col-md-6 offset-md-3">
         <h2 class="mb-3">{{ start + 1}}/{{ total }} - {{ category.label }}</h2>
-        <form @submit.prevent="nextCategory">
+        <form @submit.prevent="saveAnswer">
           <div class="card">
             <div class="card-body">
               <div v-for="nominee in category.nominees" :key="nominee.id" class="form-check">
                 <input
-                    v-model="form.nominee_id"
+                    v-model="nominee_id"
                     :id="`answer-${nominee.id}`"
-                    :checked="category.answer.nominee.id === nominee.id"
+                    :checked="category.answer && category.answer.nominee.id === nominee.id"
                     :value="nominee.id"
                     class="form-check-input"
                     type="radio"
@@ -63,9 +63,7 @@ export default {
       category: null,
       start: 0,
       total: 0,
-      form: {
-        nominee_id: null
-      }
+      nominee_id: null
     }
   },
   async created() {
@@ -120,7 +118,7 @@ export default {
               this.nominees[nominees_idx]['answer'] = answer;
 
               if (this.start === parseInt(nominees_idx)) {
-                this.form.nominee_id = answer.nominee.id;
+                this.nominee_id = answer.nominee.id;
               }
 
               break;
@@ -130,35 +128,40 @@ export default {
       }
     },
     isLast() {
-      return this.start === this.total - 1;
+      return this.start === this.total - 1
     },
-    nextCategory() {
-      let url = 'answer/';
-      let response = null;
-
-      if (this.category.answer) {
-        url += `${this.category.answer.id}/?qid=${this.$route.params.id}`;
-        response = api.put(url, this.form);
-      } else {
-        url += `?qid=${this.$route.params.id}`;
-        response = api.post(url, this.form);
+    setNextCategory() {
+      this.start++
+      this.category = this.nominees[this.start]
+    },
+    saveAnswer() {
+      if (!this.category.answer) {
+        this.setNextCategory()
+        if (this.isLast()) {
+          this.$router.push({name: 'quiz', params: {id: this.quiz.id}})
+        }
+        return
       }
 
-      response.then(() => {
+      let data = {
+        quiz: this.quiz.id,
+        nominee_id: this.nominee_id
+      }
+
+      api.post('answer/', data).then(() => {
         if (this.isLast()) {
-          this.$router.push({name: 'quiz', params: {id: this.quiz.id}});
-          return;
+          this.$router.push({name: 'quiz', params: {id: this.quiz.id}})
+          return
         }
 
-        this.start++;
-        this.category = this.nominees[this.start];
+        this.setNextCategory()
 
         if (this.category.answer) {
-          this.form.nominee_id = this.category.answer.nominee.id;
+          this.nominee_id = this.category.answer.nominee.id
+        } else {
+          this.nominee_id = null
         }
-      }).catch((err) => {
-        console.error(err);
-      });
+      })
     }
   }
 }
