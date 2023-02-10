@@ -11,7 +11,6 @@ import "bootstrap"
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faLock, faPlay, faTrophy, faCheck, faArrowsRotate, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
 import setupInterceptors from "@/services/setupInterceptors";
 
 setupInterceptors(store);

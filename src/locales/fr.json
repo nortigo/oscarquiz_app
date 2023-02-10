@@ -16,6 +16,8 @@
   "addNomineesModalTitle": "Ajouter des nominé·e·s",
   "academyAwardForBest": "Oscar du meilleur·e {category}",
   "addNominee": "Ajouter un·e nominé·e",
+  "createQuiz": "Créer quiz",
+  "createQuizButton": "Créer",
   "save": "Enregistrer",
   "login": {
     "title": "Se connecter",
@@ -47,5 +49,9 @@
     "required": "Ce champ est requis.",
     "password_min": "Le mot de passe doit comporter au moins {min} caractères.",
     "email":  "Courriel invalide."
+  },
+  "quizForm": {
+    "name": "Nom",
+    "expire_datetime": "Peut jouer jusqu'à"
   }
 }
